@@ -48,15 +48,3 @@ function App() {
 }
 
 export default App;
-
-// import React, { useState } from "react";
-// import { BrowserRouter as Router } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-// import SideBar from "./components/sidebar/SideBar";
-// import Content from "./components/content/Content";
-// import "./App.css";
-
-
-
-// export default App;

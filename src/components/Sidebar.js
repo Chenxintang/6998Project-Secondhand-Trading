@@ -12,7 +12,7 @@ import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
-import SubMenu from "./SubMenu";
+import '../styles/Sidebar.css';
 
 const SideBar = ({ isOpen, toggle }) => (
   <div className={classNames("sidebar", { "is-open": isOpen })}>
@@ -20,35 +20,41 @@ const SideBar = ({ isOpen, toggle }) => (
       <span color="info" onClick={toggle} style={{ color: "#fff" }}>
         &times;
       </span>
-      <h3>Bootstrap Sidebar</h3>
+      <p className="sidebar_name">Secondhand<br/><span style={{paddingLeft: "60px"}}>Trading</span></p>
+      <img className="sidebar_logo" src="sidebar-logo.png"/>
     </div>
     <div className="side-menu">
-      <Nav vertical className="list-unstyled pb-3">
-        <p>Dummy Heading</p>
-        <SubMenu title="Home" icon={faHome} items={submenus[0]} />
+      <Nav fill vertical className="list-unstyled pb-3">
+        {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
         <NavItem>
-          <NavLink tag={Link} to={"/about"}>
-            <FontAwesomeIcon icon={faBriefcase} className="mr-2" />
-            About
+          <NavLink tag={Link} to={"/about"} className="sidebar_navlink">
+            <FontAwesomeIcon icon={faHome} className="mr-2" />
+            Search
           </NavLink>
         </NavItem>
-        <SubMenu title="Pages" icon={faCopy} items={submenus[1]} />
+        {/* <SubMenu title="Pages" icon={faCopy} items={submenus[1]} /> */}
         <NavItem>
-          <NavLink tag={Link} to={"/pages"}>
+          <NavLink tag={Link} to={"/pages"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faImage} className="mr-2" />
-            Portfolio
+            Publish
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to={"/faq"}>
+          <NavLink tag={Link} to={"/faq"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faQuestion} className="mr-2" />
-            FAQ
+            Auction
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to={"/contact"}>
+          <NavLink tag={Link} to={"/contact"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-            Contact
+            Chat Box
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to={"/pages"}  className="sidebar_navlink">
+            <FontAwesomeIcon icon={faImage} className="mr-2" />
+            View History
           </NavLink>
         </NavItem>
       </Nav>
@@ -56,31 +62,31 @@ const SideBar = ({ isOpen, toggle }) => (
   </div>
 );
 
-const submenus = [
-  [
-    {
-      title: "Home 1",
-      target: "Home-1",
-    },
-    {
-      title: "Home 2",
-      target: "Home-2",
-    },
-    {
-      itle: "Home 3",
-      target: "Home-3",
-    },
-  ],
-  [
-    {
-      title: "Page 1",
-      target: "Page-1",
-    },
-    {
-      title: "Page 2",
-      target: "Page-2",
-    },
-  ],
-];
+// const submenus = [
+//   [
+//     {
+//       title: "Home 1",
+//       target: "Home-1",
+//     },
+//     {
+//       title: "Home 2",
+//       target: "Home-2",
+//     },
+//     {
+//       itle: "Home 3",
+//       target: "Home-3",
+//     },
+//   ],
+//   [
+//     {
+//       title: "Page 1",
+//       target: "Page-1",
+//     },
+//     {
+//       title: "Page 2",
+//       target: "Page-2",
+//     },
+//   ],
+// ];
 
 export default SideBar;

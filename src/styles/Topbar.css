@@ -1,0 +1,29 @@
+.sidebar_btn{
+    background-color: #8D75BD;
+    color: #FEE6EB;
+    font-size: 28px;
+    line-height: 30px;
+    text-align: center;
+    height: 40px;
+    width: 55px;
+}
+.sidebar_btn:focus {
+    outline: none;
+    outline-offset: none;
+    box-shadow: none;
+    background-color: #8D75BD;
+    color: #FEE6EB;
+}
+.sidebar_btn:hover{
+    background-color: #67558b;
+}
+
+.search_bar{
+    font-size: 15px;
+}
+.nav_icon{
+    color: #e097a6;
+}
+/* .nav_icon:hover{
+    color: #67558b;
+} */
