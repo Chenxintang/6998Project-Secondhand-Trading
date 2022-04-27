@@ -26,18 +26,16 @@ a:focus {
 ----------------------------------------------------- */
 .content {
   /* padding: 20px; */
-  margin-left: 0;
+  margin-right: 0px;
+  margin-right: 20px;
   height: 100vh;
 }
-
 @media only screen and (max-width: 500px) {
   body {
     overflow: hidden;
   }
 
-  .container-fluid{
-    padding-left: 0px !important;
-  }
+  
   .content.is-open {
     margin-left: 100%;
   }
@@ -58,4 +56,8 @@ a:focus {
     position: relative;
     left: 68%;
   }
+}
+
+.bg-gradient-theme {
+  background: linear-gradient(to bottom, #d8919f, #909ddd);
 }

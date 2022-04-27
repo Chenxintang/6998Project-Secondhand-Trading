@@ -27,32 +27,32 @@ const SideBar = ({ isOpen, toggle }) => (
       <Nav fill vertical className="list-unstyled pb-3">
         {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
         <NavItem>
-          <NavLink tag={Link} to={"/about"} className="sidebar_navlink">
+          <NavLink tag={Link} to={"/"} className="sidebar_navlink">
             <FontAwesomeIcon icon={faHome} className="mr-2" />
             Search
           </NavLink>
         </NavItem>
         {/* <SubMenu title="Pages" icon={faCopy} items={submenus[1]} /> */}
         <NavItem>
-          <NavLink tag={Link} to={"/pages"}  className="sidebar_navlink">
+          <NavLink tag={Link} to={"/publish"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faImage} className="mr-2" />
             Publish
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to={"/faq"}  className="sidebar_navlink">
+          <NavLink tag={Link} to={"/auction"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faQuestion} className="mr-2" />
             Auction
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to={"/contact"}  className="sidebar_navlink">
+          <NavLink tag={Link} to={"/chatbox"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
             Chat Box
           </NavLink>
         </NavItem>
         <NavItem>
-          <NavLink tag={Link} to={"/pages"}  className="sidebar_navlink">
+          <NavLink tag={Link} to={"/history"}  className="sidebar_navlink">
             <FontAwesomeIcon icon={faImage} className="mr-2" />
             View History
           </NavLink>

@@ -8,11 +8,6 @@ import SideBar from './components/Sidebar';
 import Content from "./pages/Content";
 
 
-function Hello(prop){
-  return <h1>Hello {prop.name}</h1>
-}
-
-
 function App() {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);

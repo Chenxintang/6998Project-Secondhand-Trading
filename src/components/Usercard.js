@@ -41,7 +41,7 @@ const UserCard = ({
 // };
 
 UserCard.defaultProps = {
-  avatarSize: 80,
+  avatarSize: 50,
 };
 
 export default UserCard;

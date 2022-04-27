@@ -4,6 +4,11 @@ import { Container } from "reactstrap";
 import { Routes, Route } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
+import Search from "../pages/Search"
+import Auction from "../pages/Auction"
+import Publish from "../pages/Publish"
+import Chatbox from "../pages/Chatbox"
+import History from "../pages/History"
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <Container
@@ -12,12 +17,12 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   >
     <Topbar toggleSidebar={toggleSidebar} />
     <Routes>
-      {/* <Route path="/" element={<Hello/>} />
-      <Route path="/about" element={<About/>} />
-      <Route path="/Pages" element={<Pages/>} />
-      <Route path="/faq" element={<FAQ/>} />
-      <Route path="/contact" element={<Contact/>} />
-      <Route path="/Home-1" element={<Home-1/>} />
+      <Route path="/" element={<Search/>} />
+      <Route path="/publish" element={<Publish/>} />
+      <Route path="/auction" element={<Auction/>} />
+      <Route path="/chatbox" element={<Chatbox/>} />
+      <Route path="/history" element={<History/>} />
+      {/* <Route path="/Home-1" element={<Home-1/>} />
       <Route path="/Home-2" element={<Home-2/>} />
       <Route path="/Home-3" element={<Home-3/>} />
       <Route path="/Page-1" element={<Page-1/>} />
