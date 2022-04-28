@@ -13,7 +13,7 @@ const Avatar = ({
   style,
   ...restProps
 }) => {
-  const classes = classNames({ 'rounded-circle': circle, rounded }, className);
+const classes = classNames({ 'rounded-circle': circle, rounded }, className);
   return (
     <Tag
       src={src}

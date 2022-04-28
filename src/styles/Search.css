@@ -1,3 +1,16 @@
 .dropdown_tab{
     color: black;
 }
+.product_card{
+  margin: 10px;
+}
+.card_clickable{
+  cursor: pointer;
+}
+.sortby_btn{
+  background-color: lightgrey;
+  
+  &:hover{
+    background-color: blue;
+  }
+}

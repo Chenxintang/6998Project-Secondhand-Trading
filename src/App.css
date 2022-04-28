@@ -61,3 +61,12 @@ a:focus {
 .bg-gradient-theme {
   background: linear-gradient(to bottom, #d8919f, #909ddd);
 }
+
+
+/* ---------------------------------------------------
+    PUBLISH PAGE STYLE
+----------------------------------------------------- */
+.close_image{
+  margin-left: auto; 
+  margin-right: 0;
+}

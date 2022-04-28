@@ -102,7 +102,7 @@ const Topbar = ({ toggleSidebar }) => {
                 isOpen={isOpenUserCardPopover}
                 toggle={toggleUserCardPopover}
                 target="Popover_user"
-                className="p-0 border-0"
+                className="border-0"
                 style={{ minWidth: 200 }}
               >
                 <PopoverBody className="p-0 border-light">

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import { Container } from "reactstrap";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useParams } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
 import Search from "../pages/Search"
@@ -9,6 +9,7 @@ import Auction from "../pages/Auction"
 import Publish from "../pages/Publish"
 import Chatbox from "../pages/Chatbox"
 import History from "../pages/History"
+import Product from "../pages/Product"
 
 const Content = ({ sidebarIsOpen, toggleSidebar }) => (
   <Container
@@ -22,8 +23,8 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
       <Route path="/auction" element={<Auction/>} />
       <Route path="/chatbox" element={<Chatbox/>} />
       <Route path="/history" element={<History/>} />
-      {/* <Route path="/Home-1" element={<Home-1/>} />
-      <Route path="/Home-2" element={<Home-2/>} />
+      <Route path="/product/:id" element={<Product/>} />
+      {/* <Route path="/Home-2" element={<Home-2/>} />
       <Route path="/Home-3" element={<Home-3/>} />
       <Route path="/Page-1" element={<Page-1/>} />
       <Route path="/Page-2" element={<Page-2/>} />
@@ -50,5 +51,14 @@ const Content = ({ sidebarIsOpen, toggleSidebar }) => (
     </Switch> */}
   </Container>
 );
+
+// function GetProductId() {
+//   // We can use the `useParams` hook here to access
+//   // the dynamic pieces of the URL.
+//   let product_id = useParams();
+//   return (
+//     <Product id={product_id}/>
+//   );
+// }
 
 export default Content;
