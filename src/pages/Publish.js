@@ -9,18 +9,20 @@ import {
   FormFeedback,
   FormText,
   Input,
-  Label
+  InputGroup,
+  Label,
+  InputGroupText
 } from 'reactstrap'
 import { Row, Col } from "reactstrap";
+import Addtag from "../components/Addtag";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 var product_img = {};
 
 
 const Publish = () => {
-  var product_photo_window = [];
   
-  const [uploadPhotoWindow, setuploadPhotoWindow] = React.useState(<div></div>);
+  const [uploadPhotoWindow, setuploadPhotoWindow] = React.useState([]);
 
   const add_photo = (e) => {
     console.log('enter add_photo');
@@ -62,6 +64,7 @@ const Publish = () => {
     setuploadPhotoWindow(product_photo_window);
   }
 
+  const selectedTags = (tags) => {console.log("from child: ", tags)}
   
   
 
@@ -83,13 +86,35 @@ const Publish = () => {
                 <option> Used </option>
                 <option> Refurbished </option>
                 <option> Open box </option>
-                <option> FOr parts or not working </option>
+                <option> For parts or not working </option>
               </Input>
             </FormGroup>
             <FormGroup>
               <Label for="brand"> Brand </Label>
               <Input name="brand" placeholder="Brand of the product" />
               <FormFeedback invalid> Brand can not be empty</FormFeedback>
+            </FormGroup>
+            <FormGroup>
+              <Row>
+                <Col>
+                  <Label for="sellingPrice"> Selling Price </Label>
+                  <InputGroup>
+                    <InputGroupText>$</InputGroupText>
+                    <Input placeholder="Amount" type="number" step="0.1" />
+                  </InputGroup>
+                </Col>
+                <Col>
+                  <Label for="originalPrice"> Original Price </Label>
+                  <InputGroup>
+                    <InputGroupText>$</InputGroupText>
+                    <Input placeholder="Amount" type="number" step="0.1" />
+                  </InputGroup>
+                </Col>
+              </Row>
+            </FormGroup>
+            <FormGroup>
+              <Label for="userTags"> Add Tags for the product </Label>
+              <Addtag selectedTags = {selectedTags}/>
             </FormGroup>
             <FormGroup>
               <Label for="productDetail"> Proudct Detail </Label>

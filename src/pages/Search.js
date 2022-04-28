@@ -10,18 +10,17 @@ import {
 } from "reactstrap";
 import Productwindow from "../components/Productwindow";
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../styles/Search.css'
 
 const product_dataset = {
   "homepage": {
-    "1": {"Id": "1", "Img": "https://picsum.photos/256/186", "Name": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"},
-    "2": {"Id": "2", "Img": "https://picsum.photos/256/186", "Name": "Ps5 for Sale Brand New", "Price": "600", "Location": "New York, NY"}, 
-    "3": {"Id": "3", "Img": "https://picsum.photos/256/186", "Name": "Children's Book", "Price": "40", "Location": "Yonkers, NY"},
-    "4": {"Id": "4", "Img": "https://picsum.photos/256/186", "Name": "Powerfull Bissel 3750W", "Price": "100", "Location": "New York, NY"},
-    "5": {"Id": "5", "Img": "https://picsum.photos/256/186", "Name": "Google Stadia Contorller", "Price": "20", "Location": "Queens, NY"},
-    "6": {"Id": "6", "Img": "https://picsum.photos/256/186", "Name": "Spectra Synergy Double", "Price": "240", "Location": "Queens, NY"},
-    "7": {"Id": "7", "Img": "https://picsum.photos/256/186", "Name": "Free Citibike", "Price": "40", "Location": "New York, NY"},
-    "8": {"Id": "8", "Img": "https://picsum.photos/256/186", "Name": "Airpods 3 Pro", "Price": "50", "Location": "New York, NY"},
+    "1": {"Id": "1", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"},
+    "2": {"Id": "2", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Ps5 for Sale Brand New", "Price": "600", "Location": "New York, NY"}, 
+    "3": {"Id": "3", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Children's Book", "Price": "40", "Location": "Yonkers, NY"},
+    "4": {"Id": "4", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Powerfull Bissel 3750W", "Price": "100", "Location": "New York, NY"},
+    "5": {"Id": "5", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Google Stadia Contorller", "Price": "20", "Location": "Queens, NY"},
+    "6": {"Id": "6", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Spectra Synergy Double", "Price": "240", "Location": "Queens, NY"},
+    "7": {"Id": "7", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Free Citibike", "Price": "40", "Location": "New York, NY"},
+    "8": {"Id": "8", "Img": ["https://picsum.photos/256/186", "https://picsum.photos/256/187", "https://picsum.photos/256/188"], "Name": "Airpods 3 Pro", "Price": "50", "Location": "New York, NY"},
   },
   "Women's Cloth": {
     "1": {"Id": "9", "Img": "https://picsum.photos/256/186", "Name": "Women's Cloth1", "Price": "12", "Location": "New York, NY"},
