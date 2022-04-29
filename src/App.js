@@ -6,11 +6,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import SideBar from './components/Sidebar';
 import Content from "./pages/Content";
+import Authorization from './components/Authorization';
 
 
 function App() {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
+  const [IfShowLogin, setIfShowLogin] = useState(true);
+  const toggleShowLogin = () => setIfShowLogin(!IfShowLogin);
+
+  if(IfShowLogin){
+    return <Authorization toggleShowLogin={toggleShowLogin} />
+  }
 
   return (
     <Router>

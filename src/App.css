@@ -3,6 +3,9 @@
   width: 100%;
   align-items: stretch;
 }
+html, body, #root, .wrapper {
+  height:100%;
+}
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
@@ -29,7 +32,15 @@ a:focus {
   margin-right: 0px;
   margin-right: 20px;
   height: 100vh;
+  margin-left: auto;
+  transition: all 0.5s !important;
 }
+.content.is-open {
+  margin-left: 200px !important;
+  transition: 0.5s !important;
+}
+
+
 @media only screen and (max-width: 500px) {
   body {
     overflow: hidden;
@@ -38,6 +49,7 @@ a:focus {
   
   .content.is-open {
     margin-left: 100%;
+    margin-left: 200px;
   }
 
   .sidebar.is-open {
@@ -60,6 +72,19 @@ a:focus {
 
 .bg-gradient-theme {
   background: linear-gradient(to bottom, #d8919f, #909ddd);
+}
+
+.bg-gradient-theme-left {
+  background: linear-gradient(to left, #d8919f, #909ddd);
+}
+
+.no_herf_link:hover{
+  text-decoration: none;
+  color: black;
+}
+.no_herf_link:hover {
+  cursor: pointer;
+  color: #0052cc;
 }
 
 

@@ -81,12 +81,12 @@ const Topbar = ({ toggleSidebar }) => {
               </InputGroup>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to={"/"} className="nav_icon">
+              <NavLink tag={Link} to={"/search"} className="nav_icon">
                 <AiOutlineShoppingCart size="25"/>
               </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={Link} to={"/"} className="nav_icon">
+              <NavLink tag={Link} to={"/search"} className="nav_icon">
                 <AiOutlineHeart size="25"/>
               </NavLink>
             </NavItem>

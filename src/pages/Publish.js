@@ -80,8 +80,31 @@ const Publish = () => {
               <FormText> You can include details such as brand, color, size, specs, condition, etc. 0/80 </FormText>
             </FormGroup>
             <FormGroup>
+              <Label for="categorySelect"> Category </Label>
+              <Input id="product_category" name="categorySelect" type="select" >
+                <option></option>
+                <option> Electronics & Media </option>  <option> Sports & Outdoors </option>
+                <option> Clothing & shoes </option>  <option> Pet supplies </option>
+                <option> Accesories </option>  <option> Collectibles & Art </option>
+                <option> Vehicles </option>  <option> Health & Beauty </option>
+                <option> Games & Hobbies </option>  <option> Tickets </option>  <option> Other </option>
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="locationSelect"> Location </Label>
+              <Input id="product_location" name="locationSelect" type="select" >
+                <option></option>
+                <option> Campus </option>  <option> Upper Manhattan </option>
+                <option> Midtown </option>  <option> Downtown </option>
+                <option> Queens </option>  <option> New Jersey </option>
+                <option> Brooklyn </option>  <option> Flushing </option> 
+                <option> Other Area in New York </option>
+              </Input>
+            </FormGroup>
+            <FormGroup>
               <Label for="conditionSelect"> Condition </Label>
               <Input id="product_condition" name="conditionSelect" type="select" >
+                <option></option>
                 <option> New </option>
                 <option> Used </option>
                 <option> Refurbished </option>

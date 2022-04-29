@@ -36,9 +36,9 @@ const Productwindow = (props) => {
       row.push(
         <Col key={"col"+index}>
           <Card className="product_card">
-            <CardImg alt={this_product['Name']} src={this_product['Img'][0]} top width="100%" />
+            <CardImg alt={this_product['Title']} src={this_product['Img'][0]} top width="100%" />
             <CardBody onClick={()=> redirect(this_product)} className="card_clickable">
-              <CardTitle tag="h5"> {this_product['Name']} </CardTitle>
+              <CardTitle tag="h5"> {this_product['Title']} </CardTitle>
               <CardText tag="h6">
                 ${this_product['Price']}
               </CardText>

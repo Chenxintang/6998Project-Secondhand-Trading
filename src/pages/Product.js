@@ -17,17 +17,20 @@ import PhotoGallery from "../components/PhotoGallery";
 function Product(){
   const product_id = useParams()['id'];
   const {state} = useLocation();
+  const detail = state.data
   console.log("state ",state);
-  console.log("data ", state.data);
+  console.log("data ", detail);
 
   console.log(product_id);
   return (
     <Container>
       <Row>
         <Col>
-          <PhotoGallery productinfo={state.data}/>
+          <PhotoGallery productinfo={detail}/>
         </Col>
         <Col>
+          <h3>{detail.name}</h3>
+          
         </Col>
       </Row>
       <div>
