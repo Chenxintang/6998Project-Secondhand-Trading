@@ -87,6 +87,14 @@ a:focus {
   color: #0052cc;
 }
 
+/* ---------------------------------------------------
+    AUTHORIZATION PAGE STYLE
+----------------------------------------------------- */
+.verify_code{
+  width: 40%;
+  display: inline-block;
+  margin: 10px;
+}
 
 /* ---------------------------------------------------
     PUBLISH PAGE STYLE

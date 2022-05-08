@@ -12,6 +12,7 @@ function RegisterUser(username,password,email,callback){
     attributeList.push(new AmazonCognitoIdentity.CognitoUserAttribute({ Name: "email", Value: email }));
 
     userPool.signUp(username, password, attributeList, null, function(err, result){
+        console.log(username, password, email)
         if (err) {
             console.log(err);
             if (err["code"]=="UsernameExistsException"){
@@ -45,6 +46,7 @@ function ConfirmEmail(username,code,callback){
 }
 
 function Loginfunc(email,password,callback){
+    console.log(password, email)
     var authenticationData = {
         Username: email,
         Password: password,
@@ -61,12 +63,13 @@ function Loginfunc(email,password,callback){
         onSuccess: function(result) {
             // var accessToken = result.getAccessToken().getJwtToken();
             console.log(result)
-            callback('success');
+            callback('success', result.accessToken.payload.username);
         },
 
         onFailure: function(err) {
           console.log(err)
-            alert(err.message || JSON.stringify(err));
+          callback('fail', err.message);
+            // alert(err.message || JSON.stringify(err));
         },
     });
 

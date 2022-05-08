@@ -27,7 +27,7 @@ const SideBar = ({ isOpen, toggle }) => (
       <Nav fill vertical className="list-unstyled pb-3">
         {/* <SubMenu title="Home" icon={faHome} items={submenus[0]} /> */}
         <NavItem>
-          <NavLink tag={Link} to={"/search"} className="sidebar_navlink">
+          <NavLink tag={Link} to={"/"} className="sidebar_navlink">
             <FontAwesomeIcon icon={faHome} className="mr-2" />
             Search
           </NavLink>

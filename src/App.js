@@ -1,52 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, Router, BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import SideBar from './components/Sidebar';
-import Content from "./pages/Content";
+import {LoginUser, ProfileStatus, removeProfile} from  './components/Cookie';
+import NormalPageLayout from './pages/NormalPageLayout';
 import Authorization from './components/Authorization';
+import UploadProfile from './pages/UploadProfile';
 
 
 function App() {
-  const [sidebarIsOpen, setSidebarOpen] = useState(true);
-  const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
-  const [IfShowLogin, setIfShowLogin] = useState(true);
-  const toggleShowLogin = () => setIfShowLogin(!IfShowLogin);
+  const userInfo = LoginUser();
+  // const profileFlag = ProfileStatus();
+  // console.log(ProfileStatus());
+  // const [IfUpload, setIfUpload] = useState(false);
+  // const toggleIfUpload = () => setIfUpload(!IfUpload);
+  // const [IfShowLogin, setIfShowLogin] = useState(true);
+  // const toggleShowLogin = () => setIfShowLogin(!IfShowLogin);
 
-  if(IfShowLogin){
-    return <Authorization toggleShowLogin={toggleShowLogin} />
+  console.log(userInfo)
+  if(userInfo.email && userInfo.username){
+    if(ProfileStatus() === 'true'){
+      console.log(ProfileStatus());
+      return ( <UploadProfile /> )
+    }else{
+      console.log(ProfileStatus());
+      return ( <NormalPageLayout /> )
+    }
+  }else{
+    removeProfile()
+    return (
+      // <Authorization toggleIfUpload={toggleIfUpload}/>
+      <Authorization />
+    )
   }
-
-  return (
-    <Router>
-      <div className="App wrapper">
-        <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
-        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
-      </div>
-    </Router>
-  );
-  // return (
-  //   <div className="App">
-  //     <Sidebar />
-  //     <header className="App-header">
-  //       <img src={logo} className="App-logo" alt="logo" />
-  //       <Hello name="Stacey"/>
-  //       <p>
-  //         Edit <code>src/App.js</code> and save to reload.
-  //       </p>
-  //       <a
-  //         className="App-link"
-  //         href="https://reactjs.org"
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //       >
-  //         Learn React
-  //       </a>
-  //     </header>
-  //   </div>
-  // );
 }
 
 export default App;

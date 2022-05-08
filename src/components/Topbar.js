@@ -32,6 +32,7 @@ import {
   ListGroupItem
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { LogOut } from "./Cookie";
 import Avatar from './Avatar';
 import UserCard from './Usercard';
 import '../styles/Topbar.css';
@@ -43,6 +44,7 @@ const Topbar = ({ toggleSidebar }) => {
 
   const [isOpenUserCardPopover, setUserCardPopover] = useState(false);
   const toggleUserCardPopover = () => setUserCardPopover(!isOpenUserCardPopover);
+
 
   return (
     <div>
@@ -129,7 +131,7 @@ const Topbar = ({ toggleSidebar }) => {
                       <ListGroupItem tag="button" action className="border-light">
                         <MdHelp /> Help
                       </ListGroupItem>
-                      <ListGroupItem tag="button" action className="border-light">
+                      <ListGroupItem tag="button" action className="border-light" onClick={LogOut}>
                         <MdExitToApp /> Signout
                       </ListGroupItem>
                     </ListGroup>
