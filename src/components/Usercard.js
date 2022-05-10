@@ -20,7 +20,7 @@ const UserCard = ({
     <Card inverse className={classes} {...restProps}>
       <CardBody className="d-flex justify-content-center align-items-center flex-column">
         <Avatar src={avatar} size={avatarSize} className="mb-2" />
-        <CardTitle>{title}</CardTitle>
+        <CardTitle tag="h5">{title}</CardTitle>
         <CardSubtitle>{subtitle}</CardSubtitle>
         <CardText>
           <small>{text}</small>

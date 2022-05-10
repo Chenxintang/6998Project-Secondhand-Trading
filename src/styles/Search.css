@@ -1,0 +1,24 @@
+
+/* ---------------------------------------------------
+    SEARCH PAGE STYLE
+----------------------------------------------------- */
+.dropdown_tab{
+  color: black !important;
+}
+.product_card{
+  margin: 10px;
+}
+.card_clickable{
+  cursor: pointer;
+}
+.sortby_btn{
+  background-color: lightgrey;
+}
+.category_link{
+  color: rgb(126, 126, 126);
+}
+.category_link:hover{
+  color: rgb(79, 79, 215);
+  cursor: pointer;
+  text-decoration: none;
+}

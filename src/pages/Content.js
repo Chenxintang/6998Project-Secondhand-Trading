@@ -5,38 +5,41 @@ import { Routes, Route, useParams } from "react-router-dom";
 
 import Topbar from "../components/Topbar";
 import Search from "../pages/Search"
-import Auction from "../pages/Auction"
+import Mine from "./Mine"
 import Publish from "../pages/Publish"
-import Chatbox from "../pages/Chatbox"
-import History from "../pages/History"
-import Product from "../pages/Product"
+import Wishlist from "./Wishlist"
+import Product from "./Product";
 
-const Content = ({ sidebarIsOpen, toggleSidebar }) => (
-  // <div className={classNames("content", { "is-open": sidebarIsOpen })}>
-    <Container fluid className={classNames("content", { "is-open": sidebarIsOpen })}>
+
+function Content (props){
+  const [searchQuery, setSearchQuery] = React.useState('');
+  // const [productContent, setProductContent] = React.useState(product_dataset);
+  const [Query, setQuery] = React.useState('');
+  
+  React.useEffect(() => {
+    if(searchQuery){
+      console.log("change of search query, do search request", searchQuery);
+      // api search -------------------------------
+      // setProductContent(search_result);
+      setQuery(searchQuery);
+    }
+  }, [searchQuery]);
+  
+  return (
+    <Container fluid className={classNames("content", { "is-open": props.sidebarIsOpen })}>
     {/* <Container fluid> */}
-      <Topbar toggleSidebar={toggleSidebar} />
+      <Topbar toggleSidebar={props.toggleSidebar} Search={setSearchQuery}/>
       <Routes>
-        <Route path="/" element={<Search/>} />
+        <Route path="/" element={<Search Query = {Query}/>} />
         <Route path="/publish" element={<Publish/>} />
-        <Route path="/auction" element={<Auction/>} />
-        <Route path="/chatbox" element={<Chatbox/>} />
-        <Route path="/history" element={<History/>} />
+        <Route path="/wishlist" element={<Wishlist/>} />
+        <Route path="/mine" element={<Mine/>} />
         <Route path="/product/:id" element={<Product/>} />
-        {/* <Route path="/Home-2" element={<Home-2/>} />
-        <Route path="/Home-3" element={<Home-3/>} />
-        <Route path="/Page-1" element={<Page-1/>} />
-        <Route path="/Page-2" element={<Page-2/>} />
-        <Route path="/page-1" element={<page-1/>} />
-        <Route path="/page-2" element={<page-2/>} />
-        <Route path="/page-3" element={<page-3/>} />
-        <Route path="/page-4" element={<page-4/>} /> */}
       </Routes>
     </Container>
   // </div>
-  
-  
-);
+)
+};
 
 // function GetProductId() {
 //   // We can use the `useParams` hook here to access

@@ -45,7 +45,7 @@
     display: inline-block;
 }
 .sidebar_item{
-    height: 20%;
+    margin-top: 25%;
 }
 .menu-open {
     background: #6d7fcc;

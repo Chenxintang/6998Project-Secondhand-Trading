@@ -24,20 +24,11 @@ const classes = classNames({ 'rounded-circle': circle, rounded }, className);
   );
 };
 
-// Avatar.propTypes = {
-//   tag: PropTypes.component,
-//   rounded: PropTypes.bool,
-//   circle: PropTypes.bool,
-//   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-//   src: PropTypes.string,
-//   style: PropTypes.object,
-// };
-
 Avatar.defaultProps = {
   tag: 'img',
   rounded: false,
   circle: true,
-  size: 30,
+  size: 35,
   src: 'userAvatar.JPG',
   style: {},
 };
