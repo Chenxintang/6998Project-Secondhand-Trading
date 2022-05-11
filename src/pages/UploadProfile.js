@@ -45,12 +45,12 @@ function UploadProfile(props){
     if(validateForm()){
       console.log('all form valid, sumbit info');
       console.log(valueState);
-      // var imageURL = await sendAvatarImg();
-      // var isSuccess = await sendUserProfile(imageURL);
-      // if(isSuccess){
+      var imageURL = await sendAvatarImg();
+      var isSuccess = await sendUserProfile(imageURL);
+      if(isSuccess){
         setProfile(false);       //set upload profile cookie
         window.location.href = '/';
-      // }
+      }
     }else{
       console.log('some info not valid');
     }
