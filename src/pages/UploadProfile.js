@@ -44,16 +44,17 @@ function UploadProfile(props){
     if(validateForm()){
       console.log('all form valid, sumbit info');
       console.log(valueState);
-      // if(valueState.data){
-      //   var imageURL = await sendAvatarImg();
-      // }else{
-      //   var imageURL = defaulAvatarUrl
-      // }
-      // var isSuccess = await sendUserProfile(imageURL);
-      // if(isSuccess){
+      if(valueState.data){
+        var imageURL = await sendAvatarImg();
+      }else{
+        var imageURL = defaulAvatarUrl
+      }
+      var isSuccess = await sendUserProfile(imageURL);
+      console.log(isSuccess)
+      if(isSuccess){
         setProfile(false);       //set upload profile cookie
         window.location.href = '/';
-      // }
+      }
     }else{
       console.log('some info not valid');
     }
@@ -100,7 +101,7 @@ function UploadProfile(props){
     console.log(response.status)
     // var data = await response.json();
     // console.log(data)
-    return response.status === "200"
+    return (response.status === 200)
   }
   const hiddenFileInput = React.useRef();     // hide file input
   const clickUploadBtn = () => {

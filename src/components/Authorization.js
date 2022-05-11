@@ -78,7 +78,7 @@ function Authorization(props){
   const signup_validation = () => {
     console.log(valuestate.username, valuestate.password, valuestate.email);
     var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-    var emailRegex = /[a-z0-9]+@columbia.edu/;
+    var emailRegex = /[a-z0-9]+@[a-z0-9]+.[a-z0-9]+/;
     setvalidstate({
       ...validstate,
       "nameValid": (valuestate.username.length > 0 && valuestate.username.length < 15),
