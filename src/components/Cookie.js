@@ -30,6 +30,7 @@ export const LogOut = () => {
 export const setProfile = (flag) => {
   console.log('saving upload profile cookie ', flag)
   cookie.save('profile', flag, {path: '/'});
+  return (true)
 }
 export const ProfileStatus = () => {
   return cookie.load('profile')

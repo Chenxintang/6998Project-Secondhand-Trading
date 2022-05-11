@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import {Spinner} from 'reactstrap'
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {GetAvatar, LoginUser, ProfileStatus, removeProfile, SaveAvatar} from  '../components/Cookie';
+import {GetAvatar, LoginUser, ProfileStatus, LogOut, SaveAvatar} from  '../components/Cookie';
 import SideBar from "../components/Sidebar"
 import Content from "./Content";
 
@@ -37,6 +37,7 @@ function NormalPageLayout(props) {
       fetchData(LoginUser().email);
     // }
     async function fetchData(userid) {
+      
       console.log('get recommendation data from url', loginURL, userid);
       var response = await fetch(loginURL, {
         method: 'POST',

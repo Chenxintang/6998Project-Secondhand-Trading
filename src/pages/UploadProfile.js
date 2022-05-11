@@ -52,7 +52,8 @@ function UploadProfile(props){
       var isSuccess = await sendUserProfile(imageURL);
       console.log(isSuccess)
       if(isSuccess){
-        setProfile(false);       //set upload profile cookie
+        var res = await setProfile(false);       //set upload profile cookie
+        console.log('success')
         window.location.href = '/';
       }
     }else{

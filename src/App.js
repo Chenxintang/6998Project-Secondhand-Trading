@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Routes, Route, Router, BrowserRouter} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {LoginUser, ProfileStatus, removeProfile, SaveAvatar} from  './components/Cookie';
+import {LoginUser, ProfileStatus, removeProfile, SaveAvatar, LogOut} from  './components/Cookie';
 import NormalPageLayout from './pages/NormalPageLayout';
 import Authorization from './components/Authorization';
 import UploadProfile from './pages/UploadProfile';
@@ -22,6 +22,7 @@ function App() {
 
   console.log(userInfo)
   if(userInfo.email && userInfo.username){
+    // LogOut()
     if(ProfileStatus() === 'true'){
       console.log(ProfileStatus());
       return ( <UploadProfile /> )
