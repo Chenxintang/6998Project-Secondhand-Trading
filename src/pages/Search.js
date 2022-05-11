@@ -8,41 +8,55 @@ import {
   DropdownMenu,
   DropdownItem
 } from "reactstrap";
+import { useLocation } from "react-router-dom";
 import Productwindow from "../components/Productwindow";
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../styles/Search.css';
 
-const product_dataset = {
-  "0": {"Id": "1", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"}, 
-  "1": {"Id": "2", "Img": "https://picsum.photos/256/186", "Title": "Ps5 for Sale Brand New", "Price": "600", "Location": "New York, NY"}, 
-  "2": {"Id": "3", "Img": "https://picsum.photos/256/186", "Title": "Children's Book", "Price": "40", "Location": "Yonkers, NY"},
-  "3": {"Id": "4", "Img": "https://picsum.photos/256/186", "Title": "Powerfull Bissel 3750W", "Price": "100", "Location": "New York, NY"},
-  "4": {"Id": "5", "Img": "https://picsum.photos/256/186", "Title": "Google Stadia Contorller", "Price": "20", "Location": "Queens, NY"},
-  "5": {"Id": "6", "Img": "https://picsum.photos/256/186", "Title": "Spectra Synergy Double", "Price": "240", "Location": "Queens, NY"},
-  "6": {"Id": "7", "Img": "https://picsum.photos/256/186", "Title": "Free Citibike", "Price": "40", "Location": "New York, NY"},
-  "7": {"Id": "8", "Img": "https://picsum.photos/256/186", "Title": "Airpods 3 Pro", "Price": "50", "Location": "New York, NY"},
-}
-const search_result = {
-  "0": {"Id": "1", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace2", "Price": "12", "Location": "New York, NY"}, 
-  "1": {"Id": "2", "Img": "https://picsum.photos/256/186", "Title": "Ps5 for Sale Brand New2", "Price": "600", "Location": "New York, NY"}, 
-  "2": {"Id": "3", "Img": "https://picsum.photos/256/186", "Title": "Children's Book2", "Price": "40", "Location": "Yonkers, NY"},
-  "3": {"Id": "4", "Img": "https://picsum.photos/256/186", "Title": "Powerfull Bissel 3750W2", "Price": "100", "Location": "New York, NY"},
-  "4": {"Id": "5", "Img": "https://picsum.photos/256/186", "Title": "Google Stadia Contorller2", "Price": "20", "Location": "Queens, NY"},
-  "5": {"Id": "6", "Img": "https://picsum.photos/256/186", "Title": "Spectra Synergy Double2", "Price": "240", "Location": "Queens, NY"},
-  "6": {"Id": "7", "Img": "https://picsum.photos/256/186", "Title": "Free Citibike2", "Price": "40", "Location": "New York, NY"},
-  "7": {"Id": "8", "Img": "https://picsum.photos/256/186", "Title": "Airpods 3 Pro2", "Price": "50", "Location": "New York, NY"},
-}
+// const product_dataset = {
+//   "0": {"Id": "1652219337.5907838", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"}, 
+//   "1": {"Id": "2", "Img": "https://picsum.photos/256/186", "Title": "Ps5 for Sale Brand New", "Price": "600", "Location": "New York, NY"}, 
+//   "2": {"Id": "3", "Img": "https://picsum.photos/256/186", "Title": "Children's Book", "Price": "40", "Location": "Yonkers, NY"},
+//   "3": {"Id": "4", "Img": "https://picsum.photos/256/186", "Title": "Powerfull Bissel 3750W", "Price": "100", "Location": "New York, NY"},
+//   "4": {"Id": "5", "Img": "https://picsum.photos/256/186", "Title": "Google Stadia Contorller", "Price": "20", "Location": "Queens, NY"},
+//   "5": {"Id": "6", "Img": "https://picsum.photos/256/186", "Title": "Spectra Synergy Double", "Price": "240", "Location": "Queens, NY"},
+//   "6": {"Id": "7", "Img": "https://picsum.photos/256/186", "Title": "Free Citibike", "Price": "40", "Location": "New York, NY"},
+//   "7": {"Id": "8", "Img": "https://picsum.photos/256/186", "Title": "Airpods 3 Pro", "Price": "50", "Location": "New York, NY"},
+// }
+// const search_result = {
+//   "0": {"Id": "1", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace2", "Price": "12", "Location": "New York, NY"}, 
+//   "1": {"Id": "2", "Img": "https://picsum.photos/256/186", "Title": "Ps5 for Sale Brand New2", "Price": "600", "Location": "New York, NY"}, 
+//   "2": {"Id": "3", "Img": "https://picsum.photos/256/186", "Title": "Children's Book2", "Price": "40", "Location": "Yonkers, NY"},
+//   "3": {"Id": "4", "Img": "https://picsum.photos/256/186", "Title": "Powerfull Bissel 3750W2", "Price": "100", "Location": "New York, NY"},
+//   "4": {"Id": "5", "Img": "https://picsum.photos/256/186", "Title": "Google Stadia Contorller2", "Price": "20", "Location": "Queens, NY"},
+//   "5": {"Id": "6", "Img": "https://picsum.photos/256/186", "Title": "Spectra Synergy Double2", "Price": "240", "Location": "Queens, NY"},
+//   "6": {"Id": "7", "Img": "https://picsum.photos/256/186", "Title": "Free Citibike2", "Price": "40", "Location": "New York, NY"},
+//   "7": {"Id": "8", "Img": "https://picsum.photos/256/186", "Title": "Airpods 3 Pro2", "Price": "50", "Location": "New York, NY"},
+// }
 const searchURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/search"
 
 const Search = (props) => {
   // component states definition
-  const requestProductInfo = () => {
-    if(props.Query){          // user search for something
-      return search_result
-    }else{              // normal entering, get recommendation
-      return product_dataset
-    }
+  // const requestProductInfo = () => {
+  //   if(props.Query){          // user search for something
+  //     return search_result
+  //   }else{              // normal entering, get recommendation
+  //     return product_dataset
+  //   }
+  // }
+  var PRODUCT = props.recommend_data;
+  var KEY = "Recommendation";
+
+  const location = useLocation();
+  if(location.state && "sidebar" in location.state){
+    console.log("get sidebar data")
+    PRODUCT = location.state.sidebar;
+  }else if(location.state && "topbar" in location.state){
+    console.log("get top search data")
+    KEY = location.state.topbar.key;
+    PRODUCT = location.state.topbar.data;
   }
+  // console.log(data_from_sidebar);
   
   const [categoryState, setcategoryState] = React.useState({
     'Clothing': false,
@@ -56,8 +70,8 @@ const Search = (props) => {
     'Other': false
   })
   const [choseCategory, setchoseCategory] = React.useState('')
-  const [productInfo, setProductInfo] = React.useState(requestProductInfo())
-  const [searchKey, setSearchKey] = React.useState('Recommendation')
+  const [productInfo, setProductInfo] = React.useState(PRODUCT)
+  const [searchKey, setSearchKey] = React.useState(KEY)
 
   //component react functions definition 
   React.useEffect(() => {
@@ -69,19 +83,27 @@ const Search = (props) => {
     // setProductInfo(result)
   }, [choseCategory]);
 
+  React.useEffect(() => {
+    console.log('change of PRODUCT');
+    setProductInfo(PRODUCT);
+  }, [PRODUCT]);
+  React.useEffect(() => {
+    console.log('change of KEY');
+    setSearchKey(KEY);
+  }, [KEY]);
   // React.useEffect(() => {           // refresh all product information
   //   console.log('change of props.productContent');
   //   setProductInfo(props.productContent);
   // }, [props.productContent]);
 
-  React.useEffect(() => {           // refresh all product information
-    if(props.Query){
-      console.log('change of props.Query');
-      // send search request ---------------------------------
-      var search_key = props.Query.split(' ')[0];
-      searchRequestApi("search", search_key)
-    }
-  }, [props.Query]);
+  // React.useEffect(() => {           // refresh all product information
+  //   if(props.Query){
+  //     console.log('change of props.Query');
+  //     // send search request ---------------------------------
+  //     var search_key = props.Query.split(' ')[0];
+  //     searchRequestApi("search", search_key)
+  //   }
+  // }, [props.Query]);
 
   const selectProduct = (e) =>{
     var cate = e.target.text;

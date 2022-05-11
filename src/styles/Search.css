@@ -10,6 +10,7 @@
 }
 .card_clickable{
   cursor: pointer;
+  border: solid rgb(70, 70, 70) 1px;
 }
 .sortby_btn{
   background-color: lightgrey;

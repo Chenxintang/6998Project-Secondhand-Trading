@@ -10,7 +10,7 @@ import {
 
 const PhotoGallery = (props) => {
   const information = props.productinfo;
-  const [mainUrl, setmainUrl] = React.useState(information['Img'][0])
+  const [mainUrl, setmainUrl] = React.useState(information['ImgURL'][0])
 
   const changeMainImg = (url) => {
     setmainUrl(url);
@@ -23,9 +23,9 @@ const PhotoGallery = (props) => {
           <CardImg alt={information['Id']} src={mainUrl}/>
         </Card>
       </Row>
-      <br/>
+      <hr/>
       <Row>
-        {information['Img'].map( (url, index) => (
+        {information['ImgURL'].map( (url, index) => (
           <Col key={index} md={2} >
               <CardImg alt={'img'+index} src={url} onClick={() => changeMainImg(url)} className="card_clickable"></CardImg>
           </Col>

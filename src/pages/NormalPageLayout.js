@@ -7,7 +7,7 @@ import SideBar from "../components/Sidebar"
 import Content from "./Content";
 
 
-function NormalPageLayout() {
+function NormalPageLayout(props) {
   const [sidebarIsOpen, setSidebarOpen] = useState(true);
   const toggleSidebar = () => setSidebarOpen(!sidebarIsOpen);
 
@@ -15,7 +15,7 @@ function NormalPageLayout() {
     <Router>
       <div className="App wrapper">
         <SideBar toggle={toggleSidebar} isOpen={sidebarIsOpen} />
-        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} />
+        <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} recommend_data={props.recommend_data}/>
       </div>
     </Router>
   );

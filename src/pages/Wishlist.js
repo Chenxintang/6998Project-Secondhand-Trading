@@ -11,28 +11,32 @@ import {
   ModalBody,
   ModalFooter
 } from 'reactstrap'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 
-const temp_wishlist = [
-  {
-    Id: 'a',
-    Image: 'https://picsum.photos/256/186',
-    Title: 'Retro style feather necklace',
-    Location: "New York, NY",
-    Price: "12"
-  },
-  {
-    Id: 'b',
-    Image: 'https://picsum.photos/256/186',
-    Title: 'Schedule App',
-    Location: "New York, NY",
-    Price: '9'
-  },
-]
+// const temp_wishlist = [
+//   {
+//     Id: 'a',
+//     Image: 'https://picsum.photos/256/186',
+//     Title: 'Retro style feather necklace',
+//     Location: "New York, NY",
+//     Price: "12"
+//   },
+//   {
+//     Id: 'b',
+//     Image: 'https://picsum.photos/256/186',
+//     Title: 'Schedule App',
+//     Location: "New York, NY",
+//     Price: '9'
+//   },
+// ]
 
 const Wishlist = () => {
-  let navigate = useNavigate();
-  const [wishlistData, setWishlistData] = React.useState(temp_wishlist);
+  const navigate = useNavigate();
+  const location = useLocation();
+  var data_from_sidebar = location.state.sidebar;
+  // console.log(data_from_sidebar);
+
+  const [wishlistData, setWishlistData] = React.useState(data_from_sidebar);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [modalId, setModalId] = React.useState('');
   const toggleModelOpen = (e) => {

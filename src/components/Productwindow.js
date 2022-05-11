@@ -14,8 +14,25 @@ import{
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
+const product_dataset = {
+  "Id": "2022-05-10",
+  "Title": "[Used]Airpods Pro",
+  "Location": "New York City",
+  "ImgURL": ['https://picsum.photos/256/186','https://picsum.photos/256/187','https://picsum.photos/256/188'],
+  "SellingPrice": "100",
+  "OriginalPrice":"170",
+  "CreatedTime": "2022-05-10",
+  "Category": "Electronics",
+  "Tags": ["earphone","white"],
+  "Condition": "used",
+  "Brand": "Apple",
+  "Details": "almost new, bought last year. Firm price, no bargain.",
+  "SellProductID": "yj2679@columbia.edu",
+}
+
 var product = [];
 var search_key = 'recommendation';
+const detailURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/details"
 
 const Productwindow = (props) => {
   const [sortBtnIsOpen, setsortBtnOpen] = React.useState(false);
@@ -33,8 +50,13 @@ const Productwindow = (props) => {
   }, [props.product_info]);
 
   let navigate = useNavigate(); 
-  const redirect = (id) =>{
-    navigate(`/product/${id}`); //, {state: {'data': data} }
+  const redirect = async (id) =>{
+    var URL = detailURL + `/${id}`;
+    console.log(`get api request of product ${id} to url ${URL}`);
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data);
+    navigate(`/product/${id}`, {state: {'data': data} }); //
   }
   function generate_each_product (index, this_product){
     return (

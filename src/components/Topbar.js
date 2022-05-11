@@ -31,15 +31,28 @@ import {
   ListGroup,
   ListGroupItem
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogOut } from "./Cookie";
 import { LoginUser } from "./Cookie"
 import Avatar from './Avatar';
 import UserCard from './Usercard';
 import '../styles/Topbar.css';
 
+const Item = {
+  "Id": "ct2990@columbia.edu",
+  "Name": "Stacey",
+  "Address": "2960 Broadway",
+  "PhoneNumber": "6466666666",
+  "ProtraitURL": "https://portrait.s3.amazonaws.com/staceyportrait",
+  "Gender": "Female"
+}
+const result = [{"Id": "1652219337.5907838", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"}]
+const searchURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/search"
+
 // class Topbar extends React.Component {
 const Topbar = (props) => {
+  const navigate = useNavigate();
+
   const [topbarIsOpen, setTopbarOpen] = useState(false);
   const toggleTopbar = () => setTopbarOpen(!topbarIsOpen);
 
@@ -56,9 +69,28 @@ const Topbar = (props) => {
   const handleChange = (e) => {
     setSearchQuery(e.target.value);
   }
-  const clickSearch = () => {
-    props.Search(searchQuery);
-    clearInput.current.value = "";
+  const clickSearch = async (e) => {
+    // props.Search(searchQuery);
+    // clearInput.current.value = "";
+    if(searchQuery){
+      console.log('navigate to main from top bar - search')
+      // api request to get user profile
+      var search_data = await searchRequestApi("search", searchQuery)
+      navigate('/', {state: {topbar: {key: searchQuery, data: result}} });
+    }
+  }
+  // const clickProfile = () => {
+  //   console.log('navigate to profile from top bar')
+  //   // api request to get user profile----------------------
+  //   navigate('/profile', {state: {topbar: Item} });
+  // }
+  const searchRequestApi = async (type, key) => {
+    var URL = searchURL + `?q=${type}_${key}`;
+    console.log("send search request to url", URL);
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data);
+    return data
   }
 
   return (
@@ -89,7 +121,7 @@ const Topbar = (props) => {
                   </DropdownMenu>
                 </UncontrolledButtonDropdown>
                 <Input placeholder="Search.." onChange={handleChange} innerRef={clearInput}/>
-                <Button color="secondary" submit onClick={clickSearch}>
+                <Button color="secondary" onClick={clickSearch}>
                   <MdSearch size="25"/>
                 </Button>
               </InputGroup>
@@ -125,6 +157,7 @@ const Topbar = (props) => {
                   <UserCard
                     title={LoginUser().username}
                     text={LoginUser().email}
+                    // avatar={}
                     // text="Last updated 3 mins ago"
                     className="border-light"
                     avatarSize="60px"

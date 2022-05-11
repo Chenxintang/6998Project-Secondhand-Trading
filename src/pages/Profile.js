@@ -9,11 +9,11 @@ import{
 import { useLocation } from "react-router-dom";
 import Image from 'react-bootstrap/Image'
 
-const Mine = (props) => {
+const Profile = () => {
 
-  const [profileValue, setProfileValue] = React.useState()
   const location = useLocation();
-  console.log(location.state.sidebar);
+  var data_from_sidebar = location.state.topbar;
+  const [profileValue, setProfileValue] = React.useState(data_from_sidebar)
   // console.log(props.navigation.state)
   return (
     <Row style={{ height: '100%', justifyContent: 'center', alignItems: 'center'}}>
@@ -23,16 +23,16 @@ const Mine = (props) => {
           <Col md={3} lg={4}>
             <Row>
               <Col md={10} style={{textAlign: 'center'}}>
-                  {/* <Image alt={'user avatar img'} src={valueState.url} roundedCircle top className="uplaod_avatar"/> */}
+                  <Image alt={'user avatar img'} src={profileValue.ProtraitURL} roundedCircle top className="uplaod_avatar"/>
               </Col>
             </Row>
           </Col>
           <Col md={9} lg={8}>
-            <CardText> Name:  </CardText>
-            <CardText> Phone Number:  </CardText>
-            <CardText> Email:  </CardText>
-            <CardText> Gender:  </CardText>
-            <CardText> Address:  </CardText>
+            <CardText> Name: {profileValue.Name} </CardText>
+            <CardText> Phone Number: {profileValue.PhoneNumber} </CardText>
+            <CardText> Email: {profileValue.Id} </CardText>
+            <CardText> Gender: {profileValue.Gender} </CardText>
+            <CardText> Address: {profileValue.Address} </CardText>
           </Col>
         </Row>
         </Card>
@@ -41,4 +41,4 @@ const Mine = (props) => {
   )
 };
 
-export default Mine;
+export default Profile;

@@ -19,9 +19,12 @@ import {AiOutlineCloudUpload} from 'react-icons/ai'
 import {LoginUser, setProfile} from '../components/Cookie'
 import Image from 'react-bootstrap/Image'
 
+
 const defaulAvatarS3Url = 's3://portrait/IMG_4576(20200321-223824) (2).JPG';
 // const S3BucketURL = 'https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev'
-const S3BucketURL = 'https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/upportrait'
+const S3BucketURL = 'https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/'
+
+
 function UploadProfile(props){
   // const [userAvatarURL, setuserAvatarURL] = React.useState({'url': 'userAvatar.JPG', 'data': ''});
   const [validState, setValidState] = React.useState({'address': null, 'phone': null, 'gender': null})
@@ -36,24 +39,27 @@ function UploadProfile(props){
     'type': ''
   })
 
-  const SubmitProfile = (e) => {
+  const SubmitProfile = async (e) => {
     e.preventDefault();
     console.log("into submit profile function");
     if(validateForm()){
       console.log('all form valid, sumbit info');
       console.log(valueState);
-      // sendAvatarImg();
-      setProfile(false);       //set upload profile cookie
-      window.location.href = '/';
+      // var imageURL = await sendAvatarImg();
+      // var isSuccess = await sendUserProfile(imageURL);
+      // if(isSuccess){
+        setProfile(false);       //set upload profile cookie
+        window.location.href = '/';
+      // }
     }else{
       console.log('some info not valid');
     }
   }
 
-  const sendAvatarImg = () => {
-    // var url = S3BucketURL; //+ '/upload/portrait/' + valueState.avatar_name;
-    console.log('put avatar img to url ', S3BucketURL);
-    fetch(S3BucketURL, {
+  const sendAvatarImg = async () => {
+    var URL = S3BucketURL + 'upportrait'; //+ '/upload/portrait/' + valueState.avatar_name;
+    console.log('put avatar img to url ', URL);
+    var response = await fetch(URL, {
       method: 'POST',
       headers: {
         // "X-Api-Key": 
@@ -62,26 +68,36 @@ function UploadProfile(props){
         "Content-Type": valueState.type+';base64'
       },
       body: valueState.data
-    }).then(response => {
-      return response.json();
-    }).then(data => {
-      console.log(data);
     })
+    var data = await response.json();
+    console.log(data)
+    return data.imageURL;
   }
 
-  const sendUserProfile = () => {
-    var profileUrl = S3BucketURL + '/fillinfo';
-    console.log('post avatar img to url ', profileUrl);
-    fetch(profileUrl, {
+  const sendUserProfile = async (imageURL) => {
+    var profileUrl = S3BucketURL + 'user/fillInfo';
+    console.log('post all profile to url ', profileUrl);
+    var data = {
+      Id: LoginUser().email,
+      Name: LoginUser().username,
+      Gender: valueState.gender,
+      Address: valueState.address,
+      PhoneNumber: valueState.phone,
+      PortraitURL: imageURL
+    };
+    console.log(data);
+    var response = await fetch(profileUrl, {
       method: 'POST',
       headers: {
         // "X-Api-Key": 
-        "Content-Type": valueState.type
+        "Content-Type": 'application/json'
       },
-      body: valueState.data
-    }).then(response => {
-      console.log(response);
+      body: JSON.stringify(data)
     })
+    console.log(response.status)
+    // var data = await response.json();
+    // console.log(data)
+    return response.status === "200"
   }
   const hiddenFileInput = React.useRef();     // hide file input
   const clickUploadBtn = () => {

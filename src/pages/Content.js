@@ -9,31 +9,35 @@ import Mine from "./Mine"
 import Publish from "../pages/Publish"
 import Wishlist from "./Wishlist"
 import Product from "./Product";
+import Profile from "./Profile";
 
 
 function Content (props){
-  const [searchQuery, setSearchQuery] = React.useState('');
+  // const [searchQuery, setSearchQuery] = React.useState('');
   // const [productContent, setProductContent] = React.useState(product_dataset);
-  const [Query, setQuery] = React.useState('');
+  // const [Query, setQuery] = React.useState('');
   
-  React.useEffect(() => {
-    if(searchQuery){
-      console.log("change of search query, do search request", searchQuery);
-      // api search -------------------------------
-      // setProductContent(search_result);
-      setQuery(searchQuery);
-    }
-  }, [searchQuery]);
+  // React.useEffect(() => {
+  //   if(searchQuery){
+  //     console.log("change of search query, do search request", searchQuery);
+  //     // api search -------------------------------
+  //     // setProductContent(search_result);
+  //     setQuery(searchQuery);
+  //   }
+  // }, [searchQuery]);
   
   return (
     <Container fluid className={classNames("content", { "is-open": props.sidebarIsOpen })}>
     {/* <Container fluid> */}
-      <Topbar toggleSidebar={props.toggleSidebar} Search={setSearchQuery}/>
+      {/* <Topbar toggleSidebar={props.toggleSidebar} Search={setSearchQuery} avatar={props.recommend_data.Avatar}/> */}
+      <Topbar toggleSidebar={props.toggleSidebar} avatar={props.recommend_data.Avatar}/>
       <Routes>
-        <Route path="/" element={<Search Query = {Query}/>} />
+        {/* <Route path="/" element={<Search Query = {Query} recommend_data={props.recommend_data.Data}/>} /> */}
+        <Route path="/" element={<Search recommend_data={props.recommend_data.Data}/>} />
         <Route path="/publish" element={<Publish/>} />
         <Route path="/wishlist" element={<Wishlist/>} />
         <Route path="/mine" element={<Mine/>} />
+        {/* <Route path="/profile" element={<Profile/>} /> */}
         <Route path="/product/:id" element={<Product/>} />
       </Routes>
     </Container>
