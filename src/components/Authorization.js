@@ -119,9 +119,9 @@ function Authorization(props){
     if(IsLogin === false){   // Sign up page, input validation
       console.log("confirm verification code")
       setProfile(true);
-      // ConfirmEmail(valuestate.username,valuestate.code,email_callback);
-      LogIn("ct2990@columbia.edu", "stacey");
-      window.location.href = '/';
+      ConfirmEmail(valuestate.username,valuestate.code,email_callback);
+//       LogIn("ct2990@columbia.edu", "stacey");
+//       window.location.href = '/';
     }
     else{                 // Login page, cognito validation
       setProfile(false);
