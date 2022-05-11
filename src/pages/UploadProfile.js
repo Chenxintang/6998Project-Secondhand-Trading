@@ -20,7 +20,7 @@ import {LoginUser, setProfile} from '../components/Cookie'
 import Image from 'react-bootstrap/Image'
 
 
-const defaulAvatarS3Url = 's3://portrait/IMG_4576(20200321-223824) (2).JPG';
+const defaulAvatarUrl = 'https://portrait.s3.amazonaws.com/IMG_4576(20200321-223824)+(2).JPG';
 // const S3BucketURL = 'https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev'
 const S3BucketURL = 'https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/'
 
@@ -32,8 +32,7 @@ function UploadProfile(props){
     'address': '',
     'phone': '',
     'gender': '',
-    'url': 'https://portrait.s3.amazonaws.com/IMG_4576(20200321-223824)+(2).JPG',
-    's3_url': defaulAvatarS3Url,
+    'url': defaulAvatarUrl,
     'data': '',
     'avatar_name': '',
     'type': ''
@@ -45,7 +44,11 @@ function UploadProfile(props){
     if(validateForm()){
       console.log('all form valid, sumbit info');
       console.log(valueState);
-      // var imageURL = await sendAvatarImg();
+      // if(valueState.data){
+      //   var imageURL = await sendAvatarImg();
+      // }else{
+      //   var imageURL = defaulAvatarUrl
+      // }
       // var isSuccess = await sendUserProfile(imageURL);
       // if(isSuccess){
         setProfile(false);       //set upload profile cookie

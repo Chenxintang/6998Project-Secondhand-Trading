@@ -15,7 +15,7 @@ import {
   ModalBody,
   ModalFooter
 } from "reactstrap";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import PhotoGallery from "../components/PhotoGallery";
@@ -36,10 +36,29 @@ const product_dataset = {
   "Details": "almost new, bought last year. Firm price, no bargain.",
   "SellerID": "yj2679@columbia.edu",
 }
-const detailURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/details"
+const temp_wishlist = [
+  {
+    Id: '1652219337.5907838',
+    Image: 'https://picsum.photos/256/186',
+    Title: 'Retro style feather necklace',
+    Location: "New York, NY",
+    Price: "12"
+  },
+  {
+    Id: '1652219337.5907838',
+    Image: 'https://picsum.photos/256/186',
+    Title: 'Schedule App',
+    Location: "New York, NY",
+    Price: '9'
+  },
+]
 
+const detailURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/details"
+const addWishURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/user/liked-item"
+const viewWishURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/user/view-liked/"
 
 function Product(){
+  const navigate = useNavigate();
   const product_id = useParams()['id'];
   const location = useLocation();
   const product_data = location.state.data;
@@ -58,10 +77,10 @@ function Product(){
   );
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const toggleModelOpen = (e) => {
-    if(e.target.dataset.action === 'send'){
-      console.log(`send email message to ${productDetail.SellerID}`)
-      // call send email api -----------------------------------------------
-    }
+    // if(e.target.dataset.action === 'send'){
+    //   console.log(`send email message to ${productDetail.SellerID}`)
+    //   // call send email api -----------------------------------------------
+    // }
     setIsModalOpen(!isModalOpen);
   } 
   
@@ -71,8 +90,34 @@ function Product(){
     setEmailMessage(e.target.value);
   }
 
-  const saveWishlist = () => {
-    toggleAlertOpen();
+  const saveWishlist = async () => {
+    console.log('add wish list to url', addWishURL);
+    var response = await fetch(addWishURL, {
+      method: 'POST',
+      headers: {
+        // "X-Api-Key": 
+        // "Access-Control-Allow-Origin": "*",
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({UserId: LoginUser().email, ProductId: product_id, action: "ADD"})
+    })
+    var data = await response.json();
+    var code = data.ResponseMetadata.HTTPStatusCode
+    console.log(code)
+    if(code === 200){
+      toggleAlertOpen();
+    }
+  }
+
+  const clickWishlist = async () => {
+    // api request to get user wishlist
+    var URL = viewWishURL + LoginUser().email;
+    console.log('get wish list from url', URL);
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data);
+    console.log('navigate to wishlist from product detail page')
+    navigate('/wishlist', {state: {sidebar: data.user_liked_products} });
   }
 
   return (
@@ -84,9 +129,9 @@ function Product(){
         <Col className="m-0 mr-1">
           <Alert color="success" isOpen={isAlertOpen} toggle={toggleAlertOpen}>
             Succesfully added to wishlist! 
-            <a className="alert-link" href="/wishlist" > Take a look. </a>
+            <a className="alert-link" onClick={clickWishlist} > Take a look. </a>
           </Alert>
-          <div className=" productdetail_card">
+          <div className="productdetail_card">
             <h3>{productDetail.Title}</h3>
             <div>
               <span className="selling_price">${productDetail.SellingPrice}</span>
@@ -110,20 +155,20 @@ function Product(){
         </Col>
         
         <Modal toggle={toggleModelOpen} isOpen={isModalOpen}>
-          <ModalBody>
+          <ModalBody tag="h5">
             Seller Contact Email is {productDetail.SellerID}
-            <Input
+            {/* <Input
               value={emailMessage} onChange={handleChange} className="mt-3"
-              rows={5} type="textarea" />
+              rows={5} type="textarea" /> */}
           </ModalBody>
           <ModalFooter>
             <Button color="success" data-action="send" outline onClick={toggleModelOpen} >
-              Send
+              Got it
             </Button>
-            {' '}
+            {/* {' '}
             <Button onClick={toggleModelOpen}>
               Cancel
-            </Button>
+            </Button> */}
           </ModalFooter>
         </Modal>
       </Row>

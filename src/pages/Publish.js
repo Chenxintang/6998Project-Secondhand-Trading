@@ -5,6 +5,7 @@ import {
   CardBody,
   CardTitle,
   Button,
+  Alert,
   Form, 
   FormGroup,
   FormFeedback,
@@ -15,20 +16,27 @@ import {
   InputGroupText,
   Spinner
 } from 'reactstrap'
+import { useNavigate } from "react-router-dom";
 import { Row, Col } from "reactstrap";
 import Addtag from "../components/Addtag";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { LoginUser } from "../components/Cookie";
 
 var product_img = {};
-var PhotoURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/upitemphoto";
-var InfoURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/postInfo"
+const PhotoURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/upitemphoto";
+const InfoURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/postInfo"
+const detailURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/items/details"
 
 const Publish = () => {
   // component states definition
+  const navigate = useNavigate(); 
   const [imgValueState, setimgValueState] = React.useState({});
   const [productPhotoWindow, setproductPhotoWindow] = React.useState([]);
   const [ifSpinner, setIfSpinner] = React.useState(false);
+  const [ifDisable, setIfDisable] = React.useState(false);
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
+  const toggleAlertOpen = () => setIsAlertOpen(!isAlertOpen);
+  const [itemId, setItemId] = React.useState('');
   const [formValidState, setformValidState] = React.useState({
     'title': null,
     'categorySelect': null,
@@ -98,7 +106,22 @@ const Publish = () => {
       'OriginalPrice': formValueState.originalPrice
     }
     // console.log(product_information);
-    sendInfoApi(product_information);
+    var itemid = sendInfoApi(product_information);
+    console.log(itemid)
+    setItemId(itemid)
+    toggleAlertOpen();
+    setIfDisable(true)
+    setformValueState({
+      'title': '',
+      'categorySelect': '',
+      'locationSelect': '',
+      'conditionSelect': '',
+      'brand': '',
+      'sellingPrice': '',
+      'originalPrice': '',
+      'productDetail': '',
+      'user_tags': [],
+    })
     setIfSpinner(false);
   }
   const sendPhotoAPI = async (name, data, type) => {
@@ -140,9 +163,19 @@ const Publish = () => {
     })
     var data = await response.json();
     console.log(data)
-    return data;
+    return (data.itemID);
   }
   
+  const clickItemId = async (e) => {
+    var id = itemId;
+    var URL = detailURL + `/${id}`;
+    console.log(`get api request of product ${id} to url ${URL}`);
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data);
+    navigate(`/product/${id}`, {state: {'data': data} }); //
+  }
+
   const handleChange = (e) => {
     setformValueState({
       ...formValueState,
@@ -212,12 +245,17 @@ const Publish = () => {
 
   return (
     <div>
+      <Alert color="success" isOpen={isAlertOpen} toggle={toggleAlertOpen}>
+        Succesfully published! 
+        <a className="alert-link" data-id={itemId} onClick={clickItemId} > Take a look. </a>
+      </Alert>
       <Card>
         <CardBody>
           <CardTitle tag="h3">
             Publish a new item
           </CardTitle>
-          <Form id="publish_form" onSubmit={handleSubmit}>
+          <Form id="publish_form" onSubmit={handleSubmit} >
+          <fieldset disabled ={ifDisable}>
             <FormGroup>
               <Label for="title"> Title </Label>
               <Input name="title" placeholder="Use words people will search for your item" onChange={handleChange}
@@ -313,6 +351,7 @@ const Publish = () => {
                         Tell buyers about unique features, flaws, or why you are selling it! </FormText>
               <FormFeedback invalid> Product detail can not be empty </FormFeedback>
             </FormGroup>
+          </fieldset>
           </Form>
         </CardBody>
       </Card>

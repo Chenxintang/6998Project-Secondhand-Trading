@@ -48,10 +48,11 @@ const Search = (props) => {
   var KEY = "Recommendation";
 
   const location = useLocation();
-  if(location.state && "sidebar" in location.state){
-    console.log("get sidebar data")
-    PRODUCT = location.state.sidebar;
-  }else if(location.state && "topbar" in location.state){
+  // if(location.state && "sidebar" in location.state){
+  //   console.log("get sidebar data")
+  //   PRODUCT = location.state.sidebar;
+  // }else 
+  if(location.state && "topbar" in location.state){
     console.log("get top search data")
     KEY = location.state.topbar.key;
     PRODUCT = location.state.topbar.data;
@@ -84,12 +85,16 @@ const Search = (props) => {
   }, [choseCategory]);
 
   React.useEffect(() => {
-    console.log('change of PRODUCT');
-    setProductInfo(PRODUCT);
+    if(PRODUCT){
+      console.log('change of PRODUCT');
+      setProductInfo(PRODUCT);
+    }
   }, [PRODUCT]);
   React.useEffect(() => {
-    console.log('change of KEY');
-    setSearchKey(KEY);
+    if(KEY){
+      console.log('change of KEY');
+      setSearchKey(KEY);
+    }
   }, [KEY]);
   // React.useEffect(() => {           // refresh all product information
   //   console.log('change of props.productContent');
@@ -116,6 +121,7 @@ const Search = (props) => {
   const searchRequestApi = async (type, key) => {
     var URL = searchURL + `?q=${type}_${key}`;
     console.log("send search request to url", URL);
+    console.log("result")
     var response = await fetch(URL);
     var data = await response.json();
     console.log(data);

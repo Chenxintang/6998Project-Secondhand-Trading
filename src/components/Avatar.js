@@ -29,7 +29,7 @@ Avatar.defaultProps = {
   rounded: false,
   circle: true,
   size: 35,
-  src: 'userAvatar.JPG',
+  src: 'https://portrait.s3.amazonaws.com/IMG_4576(20200321-223824)+(2).JPG',
   style: {},
 };
 

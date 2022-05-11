@@ -11,11 +11,19 @@ export const LogIn = (email, username) => {
   cookie.save('userEmail', email, { path: '/' });
   cookie.save('userName', username, { path: '/' });
 }
+export const SaveAvatar = (url) => {
+  console.log("saving avatar");
+  cookie.save('avatar', url, { path: '/' });
+}
+export const GetAvatar = () => {
+  return {'url': cookie.load('avatar')}
+}
 
 // 用户登出，删除cookie
 export const LogOut = () => {
   cookie.remove('userEmail');
   cookie.remove('userName');
+  cookie.remove('avatar');
   window.location.href = '/';
 }
 

@@ -32,7 +32,7 @@ import {
   ListGroupItem
 } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut } from "./Cookie";
+import { GetAvatar, LogOut } from "./Cookie";
 import { LoginUser } from "./Cookie"
 import Avatar from './Avatar';
 import UserCard from './Usercard';
@@ -71,12 +71,12 @@ const Topbar = (props) => {
   }
   const clickSearch = async (e) => {
     // props.Search(searchQuery);
-    // clearInput.current.value = "";
+    clearInput.current.value = "";
     if(searchQuery){
       console.log('navigate to main from top bar - search')
       // api request to get user profile
       var search_data = await searchRequestApi("search", searchQuery)
-      navigate('/', {state: {topbar: {key: searchQuery, data: result}} });
+      navigate('/', {state: {topbar: {key: searchQuery, data: search_data}} });
     }
   }
   // const clickProfile = () => {
@@ -109,7 +109,7 @@ const Topbar = (props) => {
           <Nav className="navbar_right" navbar>
             <NavItem className="search_nav_item">
               <InputGroup>
-                <UncontrolledButtonDropdown>
+                {/* <UncontrolledButtonDropdown>
                   <InputGroupText>{searchRange}</InputGroupText>
                   <DropdownToggle split outline />
                   <DropdownMenu>
@@ -119,7 +119,7 @@ const Topbar = (props) => {
                     <DropdownItem onClick={changeSearchRange} value="Seller">Seller</DropdownItem>
                     <DropdownItem onClick={changeSearchRange} value="Product">Product</DropdownItem>
                   </DropdownMenu>
-                </UncontrolledButtonDropdown>
+                </UncontrolledButtonDropdown> */}
                 <Input placeholder="Search.." onChange={handleChange} innerRef={clearInput}/>
                 <Button color="secondary" onClick={clickSearch}>
                   <MdSearch size="25"/>
@@ -133,16 +133,17 @@ const Topbar = (props) => {
                 <AiOutlineShoppingCart size="25"/>
               </NavLink>
             </NavItem> */}
-            <NavItem>
+            {/* <NavItem>
               <NavLink tag={Link} to={"/search"} className="nav_icon">
                 <AiOutlineHeart size="25"/>
               </NavLink>
-            </NavItem>
+            </NavItem> */}
             <NavItem>
               <NavLink id="Popover_user">
                 <Avatar
                   onClick={toggleUserCardPopover}
                   className="can-click"
+                  src={GetAvatar().url}
                 />
               </NavLink>
               <Popover
@@ -157,13 +158,13 @@ const Topbar = (props) => {
                   <UserCard
                     title={LoginUser().username}
                     text={LoginUser().email}
-                    // avatar={}
+                    avatar={GetAvatar().url}
                     // text="Last updated 3 mins ago"
                     className="border-light"
                     avatarSize="60px"
                   >
                     <ListGroup flush>
-                      <ListGroupItem tag="button" action className="border-light">
+                      {/* <ListGroupItem tag="button" action className="border-light">
                         <MdPersonPin /> Profile
                       </ListGroupItem>
                       <ListGroupItem tag="button" action className="border-light">
@@ -177,7 +178,7 @@ const Topbar = (props) => {
                       </ListGroupItem>
                       <ListGroupItem tag="button" action className="border-light">
                         <MdHelp /> Help
-                      </ListGroupItem>
+                      </ListGroupItem> */}
                       <ListGroupItem tag="button" action className="border-light" onClick={LogOut}>
                         <MdExitToApp /> Signout
                       </ListGroupItem>

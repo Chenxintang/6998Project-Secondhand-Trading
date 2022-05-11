@@ -6,12 +6,13 @@ import {
   faSquarePlus,
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
-import { NavItem, NavLink, Nav } from "reactstrap";
+import { NavItem, NavLink, Nav, Spinner } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 import '../styles/Sidebar.css';
+import { LoginUser } from "./Cookie";
 
 const product_dataset = {
   "0": {"Id": "1652219337.5907838", "Img": "https://picsum.photos/256/186", "Title": "Retro style feather necklace", "Price": "12", "Location": "New York, NY"}, 
@@ -25,14 +26,14 @@ const product_dataset = {
 }
 const temp_wishlist = [
   {
-    Id: 'a',
+    Id: '1652219337.5907838',
     Image: 'https://picsum.photos/256/186',
     Title: 'Retro style feather necklace',
     Location: "New York, NY",
     Price: "12"
   },
   {
-    Id: 'b',
+    Id: '1652219337.5907838',
     Image: 'https://picsum.photos/256/186',
     Title: 'Schedule App',
     Location: "New York, NY",
@@ -44,50 +45,105 @@ const sampleItem = {
   "Name": "Chenxin",
   "Address": "2960 Broadway",
   "PhoneNumber": "6466666666",
-  "ProtraitURL": "https://s3.amazonaws.com/portrait/photo1.jpg",
+  "PortraitURL": 'https://portrait.s3.amazonaws.com/IMG_4576(20200321-223824)+(2).JPG',
+  "Gender": "female",
   "SellProductID": [
-      {"Id": "a",
+      {"Id": "1652219337.5907838",
       "Image": "https://picsum.photos/256/186",
-      "Title": "Retro style feather necklace",
+      "Title": "Retro style feather necklace1",
       "Location": "New York, NY",
       "Price": "12"},
-      {"Id": "b",
-      "Image": "https://picsum.photos/256/180",
-      "Title": "Retro style feather necklace",
+      {"Id": "1652219337.5907838",
+      "Image": "https://picsum.photos/256/186",
+      "Title": "Retro style feather necklace1",
       "Location": "New York, NY",
       "Price": "10"}
   ],
   "BoughtProductID": [
-    {"Id": "c",
-    "Image": "https://picsum.photos/256/186",
-    "Title": "Retro style feather necklac",
+    {"Id": "1652219337.5907838",
+    "Image": "https://picsum.photos/256/187",
+    "Title": "Retro style feather necklac2",
     "Location": "New York, NY",
     "Price": "12"},
-    {"Id": "d",
-    "Image": "https://picsum.photos/256/180",
-    "Title": "Retro style feather necklace",
+    {"Id": "1652219337.5907838",
+    "Image": "https://picsum.photos/256/187",
+    "Title": "Retro style feather necklace2",
     "Location": "New York, NY",
     "Price": "10"}
-  ]
+  ],
+  "SoldProductID": [
+    {"Id": "1652219337.5907838",
+    "Image": "https://picsum.photos/256/188",
+    "Title": "Retro style feather necklace3",
+    "Location": "New York, NY",
+    "Price": "12"},
+    {"Id": "1652219337.5907838",
+    "Image": "https://picsum.photos/256/188",
+    "Title": "Retro style feather necklace3",
+    "Location": "New York, NY",
+    "Price": "10"}
+  ],
 }
+
+const mineURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/user/profile/"
+const loginURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/user/login"
+const viewWishURL = "https://9lyrg1tzpl.execute-api.us-east-1.amazonaws.com/dev/user/view-liked/"
+
 function SideBar ({ isOpen, toggle }){
   const navigate = useNavigate();
+  const [isSpinner, setIsSpinner] = React.useState(true)
   const clickMain = (e) => {
     console.log('navigate to mainpage from side bar')
-    // api request to get recommendation
-    navigate('/', {state: {sidebar: product_dataset, query: ''} });
-    // window.location.href = '/';
+    // api request to get recommendation----------------------
+    // var product_recommendation = getRecommendation(LoginUser().email);
+    // navigate('/', {state: {sidebar: product_dataset, query: ''} });
+    navigate('/');
   }
-  const clickMine = () => {
-    console.log('navigate to mine from side bar')
+  const clickMine = async () => {
     // api request to get user dataset
-    navigate('/mine', {state: {sidebar: sampleItem} });
+    var URL = mineURL + LoginUser().email;
+    console.log('request user profile api to url', URL)
+    setIsSpinner(false)
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data)
+    console.log('navigate to mine from side bar')
+    setIsSpinner(true)
+    navigate('/mine', {state: {sidebar: data} });
   }
-  const clickWishlist = () => {
-    console.log('navigate to wishlist from side bar')
+  
+  const clickWishlist = async () => {
     // api request to get user wishlist
-    navigate('/wishlist', {state: {sidebar: temp_wishlist} });
+    var URL = viewWishURL + LoginUser().email;
+    console.log('get wish list from url', URL);
+    var response = await fetch(URL);
+    var data = await response.json();
+    console.log(data);
+    if(data.user_liked_products == "No such products."){
+      var result = []
+    }else{
+      var result = data.user_liked_products
+    }
+    console.log('navigate to wishlist from product detail page')
+    navigate('/wishlist', {state: {sidebar: result} });
   }
+
+  async function getRecommendation(userid) {
+    console.log('get recommendation data from url', loginURL, userid);
+    var response = await fetch(loginURL, {
+      method: 'POST',
+      headers: {
+        // "X-Api-Key": 
+        // "Access-Control-Allow-Origin": "*",
+        "Content-Type": 'application/json'
+      },
+      body: JSON.stringify({UserId: userid})
+    })
+    var data = await response.json();
+    console.log(data)
+    return (data.Data)
+  }
+
   return (
     <div className={classNames("sidebar", { "is-open": isOpen })}>
       <div className="sidebar-header">
@@ -95,7 +151,7 @@ function SideBar ({ isOpen, toggle }){
           &times;
         </span>
         <p className="sidebar_name">Secondhand<br/><span style={{paddingLeft: "60px"}}>Trading</span></p>
-        <img className="sidebar_logo" src="sidebar-logo.png"/>
+        <img className="sidebar_logo" src="https://photo-6998.s3.amazonaws.com/sidebar-logo.png"/>
       </div>
       <div className="side-menu">
         <Nav fill vertical className="list-unstyled pb-3">
@@ -122,6 +178,7 @@ function SideBar ({ isOpen, toggle }){
               <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
               Mine
             </NavLink>
+            <Spinner color="info" size="" hidden={isSpinner} > Loading... </Spinner>
           </NavItem>
         </Nav>
       </div>
