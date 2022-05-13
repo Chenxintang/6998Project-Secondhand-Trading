@@ -1,0 +1,472 @@
+swagger: '2.0'
+info:
+  title: Second Hand Trading Platform
+  description: 'Second-hand trading application. Final project of the Cloud Computing and Big Data course at Columbia University.'
+  version: 1.0.0
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /items/search:
+    get:
+      summary: item search method
+      description: |
+        This API takes in a search query as a query parameter and returns zero or more info that match the search query based on OpenSearch and DynamoDB and also store searchTerm in user table as viewd-history to further get recommendations.
+      operationId: searchItems
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          required: true
+          description: the string to be searched, ex. labels and/or location
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: search results
+          schema:
+            $ref: '#/definitions/SearchResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /items/details/{id}:
+    get:
+      summary: details fetched method
+      description: |
+        This API fetch the details of the item by item_id from DynamoDB
+      opertationID: getDetail
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: item ID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: item details
+          schema:
+            $ref: '#/definitions/Items'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /upload:
+    put:
+      summary: photo upload method
+      description: |
+        This API takes in the multi-part body sent to it (ex. a photo) and uploads it to an S3 bucket.
+      operationId: uploadItem
+      consumes:
+        - image/png
+        - image/jpg
+        - image/jpeg
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: S3 PUT operation response
+          schema:
+            type: object
+            properties:
+              imageURL:
+                type: array
+                items:
+                  type: string
+                description: urls in s3
+              labels:
+                type: array
+                items:
+                  type: string
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /postInfo:
+    post:
+      summary: metadata upload method
+      description: |
+         This API takes in the metadata for the item and included the photo url stored in S3 as well as photo labels and stored 
+         these as a json format to dynamoDB and OpenSearch.
+      operationID: postInformation
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: metainfo
+          description: information included imageURLs and detected labels
+          required: true
+          schema:
+            type: object
+            #should have userID and generate a itemID
+            #should update the user table to include this itemID
+      responses:
+        '200':
+          description: Post-info response
+          schema:
+            type: object
+            properties:
+              itemID:
+                type: string
+                description: ID(key) in DB and OpenSearch (they are the same key)
+              userID:
+                type: string
+                description: userID who uploads this item
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      
+  # /user/signup:
+  #   post:
+  #     summary: signup process
+  #     description: create a new user with email and pw and stored in DB
+  #     operationID: signUp
+  #     produces:
+  #       - application/json
+  #     parameters:
+  #       - in: body
+  #         name: emailANDpw
+  #         description: signup email and password
+  #         required: true
+  #         schema:
+  #           type: object
+  #           properties:
+  #             email:
+  #               type: string
+  #             password:
+  #               type: string
+  #     responses:
+  #       '200':
+  #         description: sign up success
+  #         schema: 
+  #           type: object
+  #       '403':
+  #         description: Unauthorized
+  #         schema:
+  #           $ref: '#/definitions/Error'
+  #       '500':
+  #         description: Unexpected error
+  #         schema:
+  #           $ref: '#/definitions/Error'
+            
+  /uploadPortrait:
+    put:
+      summary: self-portrait upload method
+      description: |
+        This API takes in the multi-part body sent to it (ex. a photo) and uploads it to an S3 bucket.
+      operationId: uploadPortrait
+      consumes:
+        - image/png
+        - image/jpg
+        - image/jpeg
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: S3 PUT operation response
+          schema:
+            type: object
+            properties:
+              imageURL:
+                type: string
+                description: url in s3
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /user/fillInfo: #fill in with other info and update the db 
+    post:
+      summary: create and store user profile 
+      description: After signup, user information is stored in DynamoDB user table.
+      operationID: createProfile
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: userInfo
+          description: user personal info
+          required: true
+          schema:
+            type: object
+            #should have an empty field called uploadedItem (list of itemIDs) and liked categories and viewdHistory
+            properties:
+              # userChooseCategories:
+              #   type: array
+              #   items:
+              #     type: string
+              userID:
+                type: string
+                description: email
+              otherInfo:
+                type: object
+                description: information like location, contact-info...
+      responses:
+        '200':
+          description: post success response
+          schema:
+            $ref: '#/definitions/recommendationList'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /user/login:
+    post:
+      summary: login
+      description: authenticates the user
+      operationID: userLogin
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: loginInfo
+          required: true
+          schema: 
+            type: object
+            properties:
+              userID:
+                type: string
+                description: user email
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/recommendationList'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /user/profile/{userID}:
+    get:
+      summary: display the user profile
+      description: get the user profile
+      operationID: getProfile
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          description: user unique ID (email)
+          type: string
+      responses:
+        '200':
+          description: get profile success
+          schema:
+            type: object
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /user/liked-item:
+    post:
+      summary: store the user-liked-item
+      description: store the user-liked item in user table
+      operationID: userLike
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: userIDandItemID
+          required: true
+          schema:
+            type: object
+            properties:
+              userID:
+                type: string
+              itemID:
+                type: string
+      responses:
+        '200':
+          description: save liked success
+          schema:
+            type: object
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /user/view-liked/{userID}:
+    get:
+      summary: view all liked event by one user
+      description: retrieve all user liked itemID from user table
+      operationID: viewAllLiked
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: userID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: retrieve all liked-item success
+          schema:
+            type: object
+            properties:
+              userID:
+                type: string
+              likedItem:
+                type: array
+                items:
+                  $ref: '#/definitions/recommendation'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+        
+  # /user/recommend/{userID}:
+  #   get:
+  #     summary: push recommendation to user
+  #     description: get recommendation based on categories liked by that particular user
+  #     operationID:
+  #     produces:
+  #       - application/json
+  #     parameters:
+  #       - in: path
+  #         name: userID
+  #         required: true
+  #         description: user unique id(email)
+  #         type: string
+  #     responses:
+  #       '200':
+  #         description: get a list of recommendations
+  #         schema:
+  #           $ref: '#/definitions/SearchResponse'
+  #       '403':
+  #         description: Unauthorized
+  #         schema:
+  #           $ref: '#/definitions/Error'
+  #       '500':
+  #         description: Unexpected error
+  #         schema:
+  #           $ref: '#/definitions/Error'
+            
+definitions:
+  SearchResponse:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/ItemsList'
+  ItemsList:
+    type: object
+    properties:
+      imageURL:
+        # type: string
+        type: array
+        items:
+          type: string
+      itemID:
+        type: string
+        description: key(use currentTime plus userID) to retrieve info from Opensearch and DynamoDB
+      location:
+        type: string
+      price:
+        type: string
+      itemName:
+        type: string
+      # otherInfo:
+      #   type: object 
+      #   description: other information like userID, price, location...further filtered by these kinds of info
+  Items:
+    type: object
+    properties:
+      itemID: 
+        type: string
+      # imageurl:
+      #   type: array
+      #   items:
+      #     type: string
+      # labels:
+      #   type: array
+      #   items:
+      #     type: string
+      metaInfo:
+        type: object
+        description: all other info
+  
+  recommendationList:
+    type: object
+    properties:
+      userID:
+        type: string
+      recommendations:
+        type: array
+        items: 
+          $ref: '#/definitions/recommendation'
+  
+  recommendation:
+    type: object
+    properties:
+      itemID:
+        type: string
+      itemName:
+        type: string
+      location:
+        type: string
+      price:
+        type: string
+      imageURL:
+        type: array
+        items:
+          type: string
+      
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
